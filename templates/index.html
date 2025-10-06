@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SongMate - Smart Song Recommender</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">🎵 SONGMATE</h1>
+        <h2 class="subtitle">Discover Songs Based on What You Love</h2>
+
+        <form method="POST" action="{{ url_for('index') }}">
+            <input type="text" name="song" placeholder="Enter a song name..." required>
+            <button type="submit">Get Recommendations</button>
+        </form>
+
+        {% if message %}
+            <p class="error-message">{{ message }}</p>
+        {% endif %}
+
+        {% if recommendations %}
+            <h2 class="subtitle" style="margin-top: 30px;">
+                Recommended Songs:
+            </h2>
+            <div class="song-container">
+                {% for rec in recommendations %}
+                    <div class="song-card">
+                        <img src="{{ rec.image }}" alt="Album Cover">
+                        <p><strong>{{ rec.title }}</strong><br>by {{ rec.artist }}</p>
+                        <a href="{{ rec.link }}" target="_blank">🎧 Listen on Spotify</a>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
+
